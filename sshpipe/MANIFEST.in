@@ -1,0 +1,6 @@
+include README*
+include INSTALL*
+include LICENSE*
+include CHANGES*
+include AUTHORS*
+include setup_utils*
