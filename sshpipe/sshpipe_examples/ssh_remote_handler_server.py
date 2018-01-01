@@ -6,7 +6,7 @@ Created on Oct 3, 2017
 '''
 
 import logging
-from sshutil import SSHPipeHandler
+from sshpipe import SSHPipeHandler
 
 module_logger = logging.getLogger(__file__)
 

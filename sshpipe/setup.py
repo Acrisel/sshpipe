@@ -41,14 +41,14 @@ def import_setup_utils():
 
 
 setup_utils = import_setup_utils()
-PACKAGE = "sshutil"
+PACKAGE = "sshpipe"
 NAME = PACKAGE
 metahost = setup_utils.metahost(PACKAGE)
-DESCRIPTION = '''sshutil provide tools to manage ssh channel to remote hosts.'''
+DESCRIPTION = '''sshpipe provide tools to manage ssh channel to remote hosts.'''
 
 AUTHOR = 'Acrisel Team'
 AUTHOR_EMAIL = 'support@acrisel.com'
-URL = 'https://github.com/Acrisel/sshutil'
+URL = 'https://github.com/Acrisel/sshpipe'
 
 # version_file=os.path.join(PACKAGE, 'VERSION.py')
 # with open(version_file, 'r') as vf:

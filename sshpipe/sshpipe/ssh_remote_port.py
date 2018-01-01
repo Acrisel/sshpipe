@@ -23,8 +23,8 @@
 ##############################################################################
 
 import logging
-from sshutil.sshpipe import SSHPipe
-from sshutil.pipe_listener import pipe_listener_forever, EXIT_MESSAGE
+from sshpipe.sshpipe import SSHPipe
+from sshpipe.pipe_listener import pipe_listener_forever, EXIT_MESSAGE
 import multiprocessing as mp
 
 module_logger = logging.getLogger(__name__)

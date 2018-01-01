@@ -8,7 +8,7 @@ Created on Oct 3, 2017
 import pickle
 import sys
 import struct
-from sshutil import SSHPipeCallableHandler
+from sshpipe import SSHPipeCallableHandler
 
 
 class MySSHPipeClient(SSHPipeCallableHandler):

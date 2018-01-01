@@ -27,7 +27,7 @@ Created on Oct 3, 2017
 import os
 import multiprocessing as mp
 import sshutil_examples.sshtypes as sshtypes
-from sshutil import SSHPipe
+from sshpipe import SSHPipe
 
 import logging
 
@@ -37,7 +37,7 @@ logger.setLevel(logging.DEBUG)
 
 
 def run(host):
-    agent_dir = os.path.dirname(__file__)  # '/var/acrisel/sand/acris/sshutil/sshutil/sshutil_examples'
+    agent_dir = os.path.dirname(__file__) 
     agentpy = os.path.join(agent_dir, "sshremoteagent.py")
 
     sshagent = SSHPipe(host, agentpy, logger=logger)

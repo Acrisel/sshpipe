@@ -5,7 +5,7 @@ Created on Oct 3, 2017
 '''
 import os
 import multiprocessing as mp
-from sshutil import SSHPipe
+from sshpipe import SSHPipe
 
 '''
     ssh_remote_handler_client.py instantiate an SSH pipe on remote host.
@@ -45,7 +45,7 @@ class SSHTunnle(object):
 def run():
     # Cannot use os.path.dirname(__file__) when OSX,
     # since it adds /private prefix
-    agent_dir = os.path.dirname(__file__)  # '/var/acrisel/sand/acris/sshutil/sshutil/sshutil_examples'
+    agent_dir = os.path.dirname(__file__) 
     agentpy = os.path.join(agent_dir, "ssh_remote_handler_server.py")
     # remote host IP address, or better yet, use host by name.
     host = 'ubuntud01_eventor'
