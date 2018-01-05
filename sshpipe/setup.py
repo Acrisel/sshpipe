@@ -26,6 +26,7 @@ To create package and upload:
 
 '''
 
+
 def import_setup_utils():
     # load setup utils
     try:
@@ -50,10 +51,6 @@ AUTHOR = 'Acrisel Team'
 AUTHOR_EMAIL = 'support@acrisel.com'
 URL = 'https://github.com/Acrisel/sshpipe'
 
-# version_file=os.path.join(PACKAGE, 'VERSION.py')
-# with open(version_file, 'r') as vf:
-#     vline=vf.read()
-#VERSION = vline.strip().partition('=')[2].replace("'", "")
 VERSION = setup_utils.read_version(metahost=metahost)
 
 # Warn if we are installing over top of an existing installation. This can
@@ -66,7 +63,7 @@ if "install" in sys.argv:
         # We have to try also with an explicit prefix of /usr/local in order to
         # catch Debian's custom user site-packages directory.
         lib_paths.append(get_python_lib(prefix="/usr/local"))
-        
+
     for lib_path in lib_paths:
         existing_path = os.path.abspath(os.path.join(lib_path, PACKAGE))
         if os.path.exists(existing_path):
@@ -74,16 +71,17 @@ if "install" in sys.argv:
             # command is run, so it's more likely to be seen.
             overlay_warning = True
             break
-        
-scripts=[]
-        
+
+scripts = []
+
 # Find all sub packages
-packages=list()
+packages = list()
 for root, dirs, files in os.walk(PACKAGE, topdown=False):
     if os.path.isfile(os.path.join(root,'__init__.py')):
         packages.append(root)
 
 HERE = os.path.abspath(os.path.dirname(__file__))
+
 
 def read(*parts):
     """
@@ -92,9 +90,11 @@ def read(*parts):
     """
     with codecs.open(os.path.join(HERE, *parts), "rb", "utf-8") as f:
         return f.read()
-            
+
+
 META_PATH = os.path.join(PACKAGE, "__init__.py")
 META_FILE = read(META_PATH)
+
 
 def find_meta(meta):
     """
