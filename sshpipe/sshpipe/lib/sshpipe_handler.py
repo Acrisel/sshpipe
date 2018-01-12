@@ -176,7 +176,7 @@ class SSHPipeHandler(object):
                 try:
                     self.atstart(message)
                 except Exception as error:
-                    mlogger.debug("Exception from atstart: {}."
+                    mlogger.exception("Exception from atstart: {}."
                                   .format(error))
                     self._exitmsg = error
                     self._exitcode = 2
