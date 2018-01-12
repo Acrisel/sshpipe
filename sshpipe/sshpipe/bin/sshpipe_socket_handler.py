@@ -10,7 +10,7 @@ from logging.handlers import SocketHandler
 import pickle
 import struct
 
-module_logger = logging.getLogger(__file__)
+mlogger = logging.getLogger(__file__)
 
 
 class SSHPipeSocketHandler(SSHPipeHandler, SocketHandler):
@@ -41,7 +41,7 @@ class SSHPipeSocketHandler(SSHPipeHandler, SocketHandler):
 
     def atstart(self, receieved):
         # file = "{}{}".format(__file__, ".remote.log")
-        # self.module_logger.debug("Opening file: {}.".format(file))
+        # self.mlogger.debug("Opening file: {}.".format(file))
         # self.file = open(file, 'w')
 
         # call create socket to prevent it being called at first handle.

@@ -16,7 +16,7 @@ def run():
     # remote host IP address, or better yet, use host by name.
     host = 'ubuntud01_sequent'
 
-    tunnel = SSHTunnel(host, [agentpy, "--count 1"])
+    tunnel = SSHTunnel(host, [agentpy, "--count 1", "--id", 'ssh_tunnel_example'])
     tunnel.start()
     tunnel.send("This is life.\n")
     tunnel.send("This is also life.\n")

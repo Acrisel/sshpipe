@@ -37,7 +37,7 @@ def run():
     callback_host = 'arnon-mbp-sequent'
     callback_port = find_free_port()
 
-    tunnel = SSHTunnel(host, agentpy)
+    tunnel = SSHTunnel(host, [agentpy, '--host', callback_host, '--port', callback_port])
     tunnel.start()
     tunnel.send("This is life.\n")
     tunnel.send("This is also life.\n")
