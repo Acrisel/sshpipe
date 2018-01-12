@@ -44,6 +44,6 @@ if __name__ == '__main__':
     parser.add_argument("--count", type=int, required=False, default=1)
 
     args = parser.parse_args()
-    
+
     client = MySSHPipeHandler(count=args.count, handler_id=os.path.basename(__file__))
     client.service_loop()
