@@ -4,7 +4,7 @@ Created on Oct 3, 2017
 
 @author: arnon
 '''
-
+import os
 import logging
 from sshpipe import SSHPipeHandler
 import argparse as ap
@@ -43,5 +43,5 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
     
-    client = MySSHPipeHandler(count=args.count)
+    client = MySSHPipeHandler(count=args.count, handler_id=os.path.basename(__file__))
     client.service_loop()

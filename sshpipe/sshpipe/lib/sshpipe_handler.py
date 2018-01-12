@@ -177,7 +177,7 @@ class SSHPipeHandler(object):
                     self.atstart(message)
                 except Exception as error:
                     mlogger.exception("Exception from atstart: {}."
-                                  .format(error))
+                                      .format(error))
                     self._exitmsg = error
                     self._exitcode = 2
                     break
@@ -188,22 +188,23 @@ class SSHPipeHandler(object):
             try:
                 self.handle(message)
             except Exception as error:
-                mlogger.debug("Exception from handler: {}."
-                              .format(error))
+                mlogger.exception("Exception from handler: {}."
+                                  .format(error))
                 self._exitmsg = error
                 self._exitcode = 3
                 break
 
         self._send_callback('ATEXIT {}'.format(self.handler_id))
         self._close_callback_channel()
+
         try:
             self.atexit(message)
         except Exception as error:
-            mlogger.debug("Exception from atexit: {}.".format(error))
+            mlogger.exception("Exception from atexit: {}.".format(error))
             self._exitmsg = error
             self._exitcode = 4
         loop_message = "." if self._exitcode == 0 else " with error."
-        msg = "Completed message queue loop{}".format(loop_message)
+        msg = "Completed message queue loop{}.".format(loop_message)
         mlogger.debug(msg)
 
     def service_loop(self):
