@@ -16,7 +16,7 @@ class MySSHPipeHandler(SSHPipeHandler):
 
     def __init__(self, count, *args, **kwargs):
         super(MySSHPipeHandler, self).__init__(*args, **kwargs)
-        print('Super initiated', type(SSHPipeHandler).__module__.__file__)
+        print('Super initiated', SSHPipeHandler.__module__.__file__)
         self.count = count
         self.file = None
 
