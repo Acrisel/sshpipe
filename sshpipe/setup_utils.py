@@ -230,8 +230,10 @@ def scripts(package):
     bindir = os.path.join(package, 'bin')
     scripts = []
     if os.path.isdir(bindir):
-        scripts = [file for file in os.listdir(bindir)
-                   if os.path.isfile(file)]
+        for file in os.listdir(bindir):
+            file = os.path.join(bindir, file)
+            if os.path.isfile(file) and not file.endswith('__init__.py'):
+                scripts += [file]
     return scripts
 
 

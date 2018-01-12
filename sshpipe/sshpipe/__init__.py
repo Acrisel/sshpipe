@@ -19,12 +19,15 @@
 #    along with this program.  If not, see http://www.gnu.org/licenses/.
 #
 ##############################################################################
-from sshpipe.sshconfig import load, loads, dump, dumps
-from sshpipe.sshpipe import SSHPipe
-from sshpipe.sshpipe_callable_handler import SSHPipeCallableHandler
-from sshpipe.pipe_listener import pipe_listener, pipe_listener_forever, EXIT_MESSAGE, set_logger
-from sshpipe.sshpipe_handler import SSHPipeHandler
+from sshpipe.lib.sshconfig import load, loads, dump, dumps
+from sshpipe.lib.sshpipe import SSHPipe
+from sshpipe.lib.sshpipe_callable_handler import SSHPipeCallableHandler
+from sshpipe.lib.pipe_listener import pipe_listener, pipe_listener_forever, EXIT_MESSAGE, set_logger
+from sshpipe.lib.sshpipe_handler import SSHPipeHandler
+from sshpipe.lib.ssh_tunnel import SSHTunnel
+# from sshpipe.lib.ssh_chain import SSHChain
+# from sshpipe.lib.ssh_chain_handler import SSHChainHandler
 
 __author__ = 'arnon'
-__version__ = '0.5.0'
+__version__ = '0.5.1'
 

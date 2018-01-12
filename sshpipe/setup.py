@@ -1,11 +1,7 @@
-import os
 import sys
-import re
-import codecs
 
 from setuptools import setup
 import importlib.util
-from distutils.sysconfig import get_python_lib
 
 ''' 
 is the Python package in your project. It's the top-level folder containing the 
@@ -22,7 +18,7 @@ To create package and upload:
 
   python setup.py register
   python setup.py sdist
-  twine upload -s dist/acrilog-1.0.2.tar.gz
+  twine upload -s dist/package.tar.gz
 
 '''
 
@@ -44,13 +40,11 @@ def import_setup_utils():
 setup_utils = import_setup_utils()
 PACKAGE = "sshpipe"
 NAME = PACKAGE
+DESCRIPTION = ('sshpipe provide tools to manage ssh channel to remote hosts.')
+
 metahost = setup_utils.metahost(PACKAGE)
-DESCRIPTION = '''sshpipe provide tools to manage ssh channel to remote hosts.'''
-
-AUTHOR = 'Acrisel Team'
-AUTHOR_EMAIL = 'support@acrisel.com'
+AUTHORS, AUTHOR_EMAILS = setup_utils.read_authors(metahost=metahost)
 URL = 'https://github.com/Acrisel/sshpipe'
-
 VERSION = setup_utils.read_version(metahost=metahost)
 
 # Warn if we are installing over top of an existing installation. This can
@@ -58,81 +52,39 @@ VERSION = setup_utils.read_version(metahost=metahost)
 # still present in site-packages. See #18115.
 overlay_warning = False
 if "install" in sys.argv:
-    lib_paths = [get_python_lib()]
-    if lib_paths[0].startswith("/usr/lib/"):
-        # We have to try also with an explicit prefix of /usr/local in order to
-        # catch Debian's custom user site-packages directory.
-        lib_paths.append(get_python_lib(prefix="/usr/local"))
+    existing_path = setup_utils.existing_package(PACKAGE)
 
-    for lib_path in lib_paths:
-        existing_path = os.path.abspath(os.path.join(lib_path, PACKAGE))
-        if os.path.exists(existing_path):
-            # We note the need for the warning here, but present it after the
-            # command is run, so it's more likely to be seen.
-            overlay_warning = True
-            break
-
-scripts = []
+scripts = setup_utils.scripts(PACKAGE)
 
 # Find all sub packages
-packages = list()
-for root, dirs, files in os.walk(PACKAGE, topdown=False):
-    if os.path.isfile(os.path.join(root,'__init__.py')):
-        packages.append(root)
+packages = setup_utils.packages(PACKAGE)
+required = setup_utils.read_required(metahost=metahost)
 
-HERE = os.path.abspath(os.path.dirname(__file__))
-
-
-def read(*parts):
-    """
-    Build an absolute path from *parts* and and return the contents of the
-    resulting file.  Assume UTF-8 encoding.
-    """
-    with codecs.open(os.path.join(HERE, *parts), "rb", "utf-8") as f:
-        return f.read()
-
-
-META_PATH = os.path.join(PACKAGE, "__init__.py")
-META_FILE = read(META_PATH)
-
-
-def find_meta(meta):
-    """
-    Extract __*meta*__ from META_FILE.
-    """
-    meta_match = re.search(
-        r"^__{meta}__[ ]*=[ ]*['\"]([^'\"]*)['\"]".format(meta=meta),
-        META_FILE, re.M
-    )
-    if meta_match:
-        return meta_match.group(1)
-    raise RuntimeError("Unable to find __{meta}__ string.".format(meta=meta))
-
-setup_info={'name': NAME,
- 'version': VERSION,
- 'url': URL,
- 'author': find_meta("author"),
- 'author_email': AUTHOR_EMAIL,
- 'description': DESCRIPTION,
- 'long_description': open("README.rst", "r").read(),
- 'license': 'MIT',
- 'keywords': 'library logger multiprocessing',
- 'packages': packages,
- 'scripts' : scripts,
- 'install_requires': ['pyyaml>=3.12',
-                      'acrilib>=3.0',],
- 'extras_require': {'dev': [], 'test': []},
- 'classifiers': ['Development Status :: 4 - Beta',
-                 'Environment :: Other Environment',
-                 #'Framework :: Project Settings and Operation',
-                 'Intended Audience :: Developers',
-                 'License :: OSI Approved :: MIT License',
-                 'Operating System :: OS Independent',
-                 'Programming Language :: Python',
-                 'Programming Language :: Python :: 3',
-                 'Topic :: System :: Distributed Computing',
-                 'Topic :: Software Development :: Libraries :: Python '
-                 'Modules']}
+setup_info={
+    'name': NAME,
+    'version': VERSION,
+    'url': URL,
+    'author': AUTHORS,
+    'author_email': AUTHOR_EMAILS,
+    'description': DESCRIPTION,
+    'long_description': open("README.rst", "r").read(),
+    'license': 'MIT',
+    'keywords': 'library logger multiprocessing',
+    'packages': packages,
+    'scripts': scripts,
+    'install_requires': required,
+    'extras_require': {'dev': [], 'test': []},
+    'classifiers': ['Development Status :: 4 - Beta',
+                    'Environment :: Other Environment',
+                    #'Framework :: Project Settings and Operation',
+                    'Intended Audience :: Developers',
+                    'License :: OSI Approved :: MIT License',
+                    'Operating System :: OS Independent',
+                    'Programming Language :: Python',
+                    'Programming Language :: Python :: 3',
+                    'Topic :: System :: Distributed Computing',
+                    'Topic :: Software Development :: Libraries :: Python '
+                    'Modules']}
 setup(**setup_info)
 
 
