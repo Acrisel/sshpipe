@@ -122,8 +122,7 @@ class SSHPipeHandler(object):
         handler = RotatingFileHandler(**file_handler_kwargs)
         handler.setFormatter(formatter)
         handler.setLevel(level)
-        self.qlogger = QueueListener(logq, handler,
-                                     respect_handler_level=False)
+        self.qlogger = QueueListener(logq, handler, respect_handler_level=False)
         self.qlogger.start()
 
         queue_handler = QueueHandler(logq)
@@ -131,7 +130,7 @@ class SSHPipeHandler(object):
         mlogger.setLevel(level)
         mlogger.addFilter(LoggerAddHostFilter())
         self.mlogger = mlogger
-
+        print("Logger:", repr(mlogger))
         mlogger.debug("self.mlogger: method is set {}.".format(repr(self.mlogger)))
 
         signal.signal(signal.SIGHUP, self.exit_gracefully)
