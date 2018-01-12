@@ -38,7 +38,7 @@ if __name__ == '__main__':
     # TODO: add command line options
     parser = ap.ArgumentParser("Example parameters for aget process.")
     parser.add_argument("--count", type=int, required=False, default=1)
-    parser.add_argument("--id", type=int, required=False, default=1, dest='tag')
+    parser.add_argument("--id", type=str, required=False, default=1, dest='tag')
 
     args = parser.parse_args()
 
