@@ -34,7 +34,7 @@ class MySSHPipeHandler(SSHPipeHandler):
         super(MySSHPipeHandler, self).atexit(received)
 
     def handle(self, received):
-        for _ in self.count:
+        for _ in range(self.count):
             self.file.write(str(received))
 
 
