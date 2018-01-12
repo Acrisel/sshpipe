@@ -41,5 +41,5 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
     
-    client = MySSHPipeHandler(count=count)
+    client = MySSHPipeHandler(count=args.count)
     client.service_loop()
