@@ -75,7 +75,6 @@ class SSHPipeHandler(object):
                  n: allow n errors before aborting (abort on error number n+1)
         """
         global mlogger
-        print('Init SSHPipeHandler')
         self.term_messages = term_messages
         if term_messages is None:
             self.term_messages = SSHPipeHandler.TERM_MESSAGES
@@ -131,7 +130,6 @@ class SSHPipeHandler(object):
         mlogger.setLevel(level)
         mlogger.addFilter(LoggerAddHostFilter())
         self.mlogger = mlogger
-        print("Logger:", repr(mlogger))
         mlogger.debug("self.mlogger: method is set {}.".format(repr(self.mlogger)))
 
         signal.signal(signal.SIGHUP, self.exit_gracefully)

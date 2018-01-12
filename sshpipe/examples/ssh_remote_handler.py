@@ -21,10 +21,6 @@ class MySSHPipeHandler(SSHPipeHandler):
 
     def atstart(self, received):
         file = "{}{}".format(__file__, ".remote.log")
-        # if not hasattr(super(MySSHPipeHandler, self), 'mlogger'):
-        #     raise RuntimeError("Super missing mlogger method.")
-        if not hasattr(self, 'mlogger'):
-            raise RuntimeError("Self missing mlogger method.")
         self.mlogger.debug("Opening file: {}.".format(file))
         self.file = open(file, 'w')
 
