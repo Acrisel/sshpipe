@@ -12,6 +12,7 @@ def run():
     # since it adds /private prefix
     agent_dir = os.path.dirname(__file__) 
     agentpy = os.path.join(agent_dir, "ssh_remote_handler.py")
+    print('agentpy:', agentpy)
     # remote host IP address, or better yet, use host by name.
     host = 'ubuntud01_sequent'
 
