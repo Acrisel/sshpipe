@@ -1,8 +1,8 @@
 eclipse.preferences.version=1
 encoding//concepts/ssh_chain_handler.py=utf-8
+encoding//examples/sshremoteagentusage.py=utf-8
 encoding//sshpipe/__init__.py=utf-8
 encoding//sshpipe/lib/pipe_listener.py=utf-8
 encoding//sshpipe/lib/ssh_tunnel.py=utf-8
 encoding//sshpipe/lib/sshpipe.py=utf-8
 encoding//sshpipe/lib/sshpipe_handler.py=utf-8
-encoding//sshpipe_examples/sshremoteagentusage.py=utf-8
