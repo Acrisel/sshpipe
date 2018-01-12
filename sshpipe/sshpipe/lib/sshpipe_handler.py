@@ -132,6 +132,8 @@ class SSHPipeHandler(object):
         mlogger.addFilter(LoggerAddHostFilter())
         self.mlogger = mlogger
 
+        mlogger.debug("self.mlogger: method is set {}.".format(repr(self.mlogger)))
+
         signal.signal(signal.SIGHUP, self.exit_gracefully)
         signal.signal(signal.SIGINT, self.exit_gracefully)
         signal.signal(signal.SIGTERM, self.exit_gracefully)
