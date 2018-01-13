@@ -91,7 +91,7 @@ def run():
     listener = Thread(target=socket_listiner, args=(callback_port, ))
     listener.start()
 
-    tunnel = SSHTunnel(host, [agentpy, '--host', callback_host, '--port', callback_port])
+    tunnel = SSHTunnel(host, [agentpy, '--host', callback_host, '--port', str(callback_port)])
     tunnel.start()
     tunnel.send("This is life.\n")
     tunnel.send("This is also life.\n")

@@ -28,7 +28,7 @@ Created on Aug 27, 2017
 import pickle
 import struct
 import multiprocessing as mp
-from subprocess import PIPE, run
+import subprocess as sp
 import time
 import logging
 import os
@@ -100,8 +100,8 @@ def remote_agent(where, command, pipe_read, pipe_write, communicateq, config,
     cmd += [where] + command
 
     mlogger.debug('Starting subprocess run({})'.format(cmd))
-    sshrun = run(cmd, shell=False, stdin=pipe_readf, stdout=PIPE, stderr=PIPE,
-                 check=False,)
+    sshrun = sp.run(cmd, shell=False, stdin=pipe_readf, stdout=sp.PIPE, stderr=sp.PIPE,
+                    check=False,)
 
     returncode, stdout, stderr = (sshrun.returncode,
                                   sshrun.stdout.decode(encoding),
