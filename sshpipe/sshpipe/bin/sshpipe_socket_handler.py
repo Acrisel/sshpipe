@@ -67,11 +67,9 @@ class SSHPipeSocketHandler(SSHPipeHandler, SocketHandler):
 def cmdargs():
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('--host', type=str, default='127.0.0.1',
-                        required=False,
-                        help='')
-    parser.add_argument('--port', type=int, required=False,
-                        help='')
+    parser.add_argument('--host', type=str, default='127.0.0.1', required=False, help='')
+    parser.add_argument('--port', type=int, required=False, help='')
+    parser.add_argument("--id", type=str, required=False, default=1, dest='handler_id')
     args = parser.parse_args()
     return vars(args)
 

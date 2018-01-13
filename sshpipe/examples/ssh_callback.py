@@ -5,6 +5,9 @@ Created on Jan 12, 2018
 '''
 
 import socket
+import struct
+import pickle
+from threading import Thread
 from contextlib import closing
 import os
 from sshpipe import SSHTunnel
@@ -26,6 +29,53 @@ def find_free_port():
         return port
 
 
+def socket_listiner(port):
+    # create an INET, STREAMing socket
+    serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    # bind the socket to a public host
+    serversocket.bind((socket.gethostname(), port))
+    # become a server socket
+    serversocket.listen(5)
+
+    while 1:
+        # accept connections from outside
+        (clientsocket, address) = serversocket.accept()
+        # now do something with the clientsocket
+        # in this case, we'll pretend this is a threaded server
+        ct = Thread(target=client_thread, args=(clientsocket, ), daemon=True)
+        ct.start()
+
+
+def read_message_length(socket):
+    fmt = ">L"
+    llen = struct.calcsize(fmt)
+    raw = socket.recv(llen)
+    slen = struct.unpack(fmt, raw)
+    return slen
+
+
+def read_message(socket, length):
+    chunks = []
+    bytes_recd = 0
+    while bytes_recd < length:
+        chunk = socket.recv(min(length - bytes_recd, length))
+        if chunk == '':
+            raise RuntimeError("socket connection broken")
+        chunks.append(chunk)
+        bytes_recd = bytes_recd + len(chunk)
+    return ''.join(chunks)
+
+
+def client_thread(socket,):
+    while 1:
+        slen = read_message_length(socket)
+        raw = read_message(socket, slen)
+        result = pickle.loads(raw, 1)
+        print(result)
+        if result == 'TERM':
+            break
+
+
 def run():
     # Cannot use os.path.dirname(__file__) when OSX,
     # since it adds /private prefix
@@ -36,6 +86,10 @@ def run():
 
     callback_host = 'arnon-mbp-sequent'
     callback_port = find_free_port()
+    
+    # start port listener
+    listener = Thread(target=socket_listiner)
+    listener.start()
 
     tunnel = SSHTunnel(host, [agentpy, '--host', callback_host, '--port', callback_port])
     tunnel.start()
