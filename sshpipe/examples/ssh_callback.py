@@ -88,7 +88,7 @@ def run():
     callback_port = find_free_port()
     
     # start port listener
-    listener = Thread(target=socket_listiner)
+    listener = Thread(target=socket_listiner, args=(callback_port, ))
     listener.start()
 
     tunnel = SSHTunnel(host, [agentpy, '--host', callback_host, '--port', callback_port])
