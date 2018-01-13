@@ -32,7 +32,7 @@ class MySSHPipeHandler(SSHPipeHandler):
     def atexit(self, received):
         if self.file is not None:
             self.file.close()
-        self.tunnel.send(str(received))
+        self.tunnel.close()
         super(MySSHPipeHandler, self).atexit(received)
 
     def handle(self, received):
