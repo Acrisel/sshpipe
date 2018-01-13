@@ -31,10 +31,12 @@ class MySSHPipeHandler(SSHPipeHandler):
     def atexit(self, received):
         if self.file is not None:
             self.file.close()
+        self.tunnel.send(str(received))
         super(MySSHPipeHandler, self).atexit(received)
 
     def handle(self, received):
         self.file.write(str(received))
+        self.tunnel.send(str(received))
 
 
 if __name__ == '__main__':
