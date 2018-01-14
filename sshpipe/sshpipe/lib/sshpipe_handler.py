@@ -84,7 +84,7 @@ class SSHPipeHandler(object):
         self.tolerance = tolerance
         self.handler_id = handler_id
         if handler_id is None:
-            "sshpipe_handler_{}".format(os.getpid())
+            self.handler_id = "sshpipe_handler_{}".format(os.getpid())
         self._exitmsg = ""
         self._exitcode = 0
         self.caller_host = caller_host

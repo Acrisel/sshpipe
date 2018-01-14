@@ -93,6 +93,7 @@ def run():
 
     tunnel = SSHTunnel(host, [agentpy, '--host', callback_host, '--port', str(callback_port)])
     tunnel.start()
+    print('Sending messages to remote agent.')
     tunnel.send("This is life.\n")
     tunnel.send("This is also life.\n")
     tunnel.send("This is yet another life.\n")

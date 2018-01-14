@@ -27,11 +27,13 @@ class MySSHPipeHandler(SSHPipeHandler):
         file = "{}{}".format(__file__, ".remote.log")
         self.mlogger.debug("Opening file: {}.".format(file))
         self.file = open(file, 'w')
+        self.mlogger.debug("Starting callback tunnel.")
         self.tunnel.start()
 
     def atexit(self, received):
         if self.file is not None:
             self.file.close()
+        self.mlogger.debug("Closing callback tunnel.")
         self.tunnel.close()
         super(MySSHPipeHandler, self).atexit(received)
 
@@ -44,7 +46,7 @@ if __name__ == '__main__':
     parser = ap.ArgumentParser("Example parameters for aget process.")
     parser.add_argument("--host", type=str, required=False, default=1)
     parser.add_argument("--port", type=int, required=False, default=1)
-    parser.add_argument("--id", type=str, required=False, default=1, dest='handler_id')
+    parser.add_argument("--id", type=str, required=False, dest='handler_id')
     args = parser.parse_args()
 
     client = MySSHPipeHandler(host=args.host, port=args.port, handler_id=args.handler_id)
