@@ -33,45 +33,54 @@ def socket_listiner(port):
     # create an INET, STREAMing socket
     serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # bind the socket to a public host
-    serversocket.bind((socket.gethostname(), port))
+    # print('HOST:', socket.gethostname())
+    serversocket.bind(('', port))
     # become a server socket
     serversocket.listen(5)
 
-    while 1:
+    # we only expect one client to 
+    clients = 1
+    while clients:
         # accept connections from outside
         (clientsocket, address) = serversocket.accept()
         # now do something with the clientsocket
         # in this case, we'll pretend this is a threaded server
         ct = Thread(target=client_thread, args=(clientsocket, ), daemon=True)
         ct.start()
+        clients -= 1
 
 
 def read_message_length(socket):
     fmt = ">L"
     llen = struct.calcsize(fmt)
     raw = socket.recv(llen)
-    slen = struct.unpack(fmt, raw)
-    return slen
+    slen = (0,)
+    if raw:
+        slen = struct.unpack(fmt, raw)
+    return slen[0]
 
 
 def read_message(socket, length):
-    chunks = []
     bytes_recd = 0
+    raw = b''
     while bytes_recd < length:
         chunk = socket.recv(min(length - bytes_recd, length))
         if chunk == '':
             raise RuntimeError("socket connection broken")
-        chunks.append(chunk)
         bytes_recd = bytes_recd + len(chunk)
-    return ''.join(chunks)
+        raw += chunk
+    return raw
 
 
 def client_thread(socket,):
     while 1:
         slen = read_message_length(socket)
+        if slen == 0:
+            # port is closed
+            break
         raw = read_message(socket, slen)
-        result = pickle.loads(raw, 1)
-        print(result)
+        result = pickle.loads(raw)
+        print('ARRIVED:', result)
         if result == 'TERM':
             break
 
@@ -84,7 +93,7 @@ def run():
     # remote host IP address, or better yet, use host by name.
     host = 'ubuntud01_sequent'
 
-    callback_host = 'arnon-mbp-sequent'
+    callback_host = 'mbp_sequent'
     callback_port = find_free_port()
 
     # start port listener

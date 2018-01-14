@@ -26,6 +26,7 @@ class SSHPipeSocketHandler(SSHPipeHandler, SocketHandler):
             self.address = host
         else:
             self.address = (host, port)
+        self.mlogger.debug("Server socket address: {}.".format(self.address))
 
     def makePickle(self, record):
         """
@@ -53,6 +54,7 @@ class SSHPipeSocketHandler(SSHPipeHandler, SocketHandler):
         #     self.file.close()
         SSHPipeHandler.atexit(self, received)
         SocketHandler.close(self)
+        self.mlogger.debug("Closed handlers.")
 
     def handle(self, received):
         """
@@ -62,7 +64,8 @@ class SSHPipeSocketHandler(SSHPipeHandler, SocketHandler):
         network is busy.
         """
         # self.file.write(str(received))
-        SocketHandler.emit(self, received)
+        self.emit(received)
+        self.mlogger.debug("Emitted record to socket: {}.".format(received))
 
 
 def cmdargs():
