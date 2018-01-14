@@ -86,13 +86,14 @@ def run():
 
     callback_host = 'arnon-mbp-sequent'
     callback_port = find_free_port()
+        
+    # start port listener
+    listener = Thread(target=socket_listiner, args=(callback_port, ))
+    listener.start()
 
     tunnel = SSHTunnel(host, [agentpy, '--host', callback_host, '--port', str(callback_port)])
     tunnel.start(wait=1)
     if tunnel.is_alive():
-        # start port listener
-        listener = Thread(target=socket_listiner, args=(callback_port, ))
-        listener.start()
 
         print('Sending messages to remote agent.')
         tunnel.send("This is life.\n")

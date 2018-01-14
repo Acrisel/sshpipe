@@ -23,13 +23,13 @@ class MySSHPipeHandler(SSHPipeHandler):
         handler = os.path.join(bindir, 'sshpipe_socket_handler.py')
         self.mlogger.debug("Initiating callback tunnel: {}.".format(handler))
         self.tunnel = SSHTunnel(host, [handler, '--id', type(self).__name__, '--port', port,])
-
+        self.mlogger.debug("Starting callback tunnel.")
+        self.tunnel.start()
+        
     def atstart(self, received):
         file = "{}{}".format(__file__, ".remote.log")
         self.mlogger.debug("Opening file: {}.".format(file))
         self.file = open(file, 'w')
-        self.mlogger.debug("Starting callback tunnel.")
-        self.tunnel.start()
 
     def atexit(self, received):
         if self.file is not None:
