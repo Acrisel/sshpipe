@@ -57,7 +57,7 @@ class SSHTunnel(object):
         self.__sshagent = None
         self.__state = 'initial'
 
-    def start(self, wait=0.2):
+    def start(self, wait=1):
         self.__sshagent =\
             sshagent = SSHPipe(host=self.remote, command=self.receiver)
         sshagent.start(wait=wait)

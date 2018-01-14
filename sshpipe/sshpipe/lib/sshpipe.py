@@ -100,8 +100,8 @@ def remote_agent(where, command, pipe_read, pipe_write, communicateq, config,
     cmd += [where] + command
 
     mlogger.debug('Starting subprocess run({})'.format(cmd))
-    sshrun = sp.run(cmd, shell=False, stdin=pipe_readf, stdout=sp.PIPE, stderr=sp.PIPE,
-                    check=False,)
+    sshrun = sp.run(cmd, shell=False, stdin=pipe_readf, stdout=sp.PIPE,
+                    stderr=sp.PIPE, check=False,)
 
     returncode, stdout, stderr = (sshrun.returncode,
                                   sshrun.stdout.decode(encoding),
@@ -181,7 +181,7 @@ then eval \"$SSH_ORIGINAL_COMMAND\"; else exec \"$SHELL\"; fi" ssh-rsa ...
         self.name = name
         self.__state = SSHPipeState.initiated
 
-    def start(self, wait=0.2):
+    def start(self, wait=1):
         ''' Starts process wherein SSH command will be executed.
 
         Args:
