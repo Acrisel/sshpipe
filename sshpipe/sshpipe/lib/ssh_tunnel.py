@@ -42,7 +42,7 @@ class SSHTunnel(object):
 
     '''
 
-    def __init__(self, remote, receiver):
+    def __init__(self, remote, receiver, logger=None):
         ''' Initiates SSHTunnle object.
 
         Args:
@@ -56,10 +56,11 @@ class SSHTunnel(object):
         self.remote = remote
         self.__sshagent = None
         self.__state = 'initial'
+        self.logger = logger
 
     def start(self, wait=1):
         self.__sshagent =\
-            sshagent = SSHPipe(host=self.remote, command=self.receiver)
+            sshagent = SSHPipe(host=self.remote, command=self.receiver, logger=self.logger)
         sshagent.start(wait=wait)
 
         if not sshagent.is_alive():

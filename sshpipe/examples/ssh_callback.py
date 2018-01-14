@@ -102,7 +102,9 @@ def run():
         tunnel.send("That is all, life.\n")
         tunnel.send("TERM")
         tunnel.close()
-    print('Response:', tunnel.response())
+    print('Response:')
+    for msg in tunnel.response():
+        print(msg)
 
 
 if __name__ == '__main__':

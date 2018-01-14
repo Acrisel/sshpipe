@@ -22,7 +22,7 @@ class MySSHPipeHandler(SSHPipeHandler):
         bindir = os.path.join(os.path.dirname(here), 'bin')
         handler = os.path.join(bindir, 'sshpipe_socket_handler.py')
         self.mlogger.debug("Initiating callback tunnel: {}.".format(handler))
-        self.tunnel = SSHTunnel(host, [handler, '--id', type(self).__name__, '--port', str(port),])
+        self.tunnel = SSHTunnel(host, [handler, '--id', type(self).__name__, '--port', str(port),], logger=self.mlogger)
         self.mlogger.debug("Starting callback tunnel.")
         self.tunnel.start()
 
