@@ -330,9 +330,14 @@ then eval \"$SSH_ORIGINAL_COMMAND\"; else exec \"$SHELL\"; fi" ssh-rsa ...
             self.send(msg)
         else:
             mlogger.debug('Process is not alive, skipping {}.'.format(msg))
-            pass
+
         if self.pipe_writef:
-            self.pipe_writef.close()
+            try:
+                self.pipe_writef.close()
+            except BrokenPipeError:
+                # already closed
+                mlogger.debug('BorkenPipe when closing writer; Reader already closed.')
+
         response = self.response()
         mlogger.debug('Joining with subprocess.')
         self.__agent.join()

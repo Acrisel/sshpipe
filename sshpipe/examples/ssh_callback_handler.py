@@ -36,6 +36,8 @@ class MySSHPipeHandler(SSHPipeHandler):
             self.file.close()
         self.mlogger.debug("Closing callback tunnel.")
         self.tunnel.close()
+        for name, msg in zip(['returncode', 'stdout', 'stderr'], self.tunnel.response()):
+            self.mlogger.debug("response {}:\n{}".format(name, msg))
         super(MySSHPipeHandler, self).atexit(received)
 
     def handle(self, received):

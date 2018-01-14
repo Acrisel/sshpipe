@@ -86,7 +86,7 @@ def run():
 
     callback_host = 'arnon-mbp-sequent'
     callback_port = find_free_port()
-        
+
     # start port listener
     listener = Thread(target=socket_listiner, args=(callback_port, ))
     listener.start()
