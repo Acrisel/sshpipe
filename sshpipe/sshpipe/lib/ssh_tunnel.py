@@ -86,7 +86,7 @@ class SSHTunnel(object):
             raise RuntimeError("Attempted response() without closing the tunnel.")
         return self.__sshagent.response()
 
-    def close(self):
+    def close(self, msg=None):
         if self.__state == 'start':
-            self.__sshagent.close()
+            self.__sshagent.close(msg=msg)
             self.__state = 'close'
