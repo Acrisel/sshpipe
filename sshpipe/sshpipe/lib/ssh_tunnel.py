@@ -42,7 +42,7 @@ class SSHTunnel(object):
 
     '''
 
-    def __init__(self, remote, receiver, logger=None):
+    def __init__(self, remote, receiver, name=None, logger=None):
         ''' Initiates SSHTunnle object.
 
         Args:
@@ -57,10 +57,11 @@ class SSHTunnel(object):
         self.__sshagent = None
         self.__state = 'initial'
         self.logger = logger
+        self.name = name
 
     def start(self, wait=1):
         self.__sshagent =\
-            sshagent = SSHPipe(host=self.remote, command=self.receiver, logger=self.logger)
+            sshagent = SSHPipe(host=self.remote, command=self.receiver, name=self.name, logger=self.logger)
         sshagent.start(wait=wait)
 
         if not sshagent.is_alive():
@@ -69,10 +70,13 @@ class SSHTunnel(object):
         self.__state = 'start'
         return self
 
-    def send(self, message):
+    def pid(self):
+        return self.__sshagent.pid
+
+    def send(self, message, pack=True):
         if self.__state != 'start':
             raise RuntimeError("Attempted send() without starting the tunnel.")
-        self.__sshagent.send(message)
+        self.__sshagent.send(message, pack=pack)
 
     def is_alive(self):
         return self.__sshagent.is_alive()
