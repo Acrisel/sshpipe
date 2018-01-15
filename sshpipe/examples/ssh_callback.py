@@ -34,7 +34,7 @@ def socket_listiner(port):
     serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # bind the socket to a public host
     # print('HOST:', socket.gethostname())
-    serversocket.bind(('', port))
+    serversocket.bind(('127.0.0.1', port))
     # become a server socket
     serversocket.listen(5)
 
