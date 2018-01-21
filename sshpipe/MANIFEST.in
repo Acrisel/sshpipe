@@ -3,4 +3,5 @@ include INSTALL*
 include LICENSE*
 include CHANGES*
 include AUTHORS*
+include REQUIRED*
 include setup_utils*

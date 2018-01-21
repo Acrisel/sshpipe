@@ -29,5 +29,5 @@ from sshpipe.lib.ssh_tunnel import SSHTunnel
 # from sshpipe.lib.ssh_chain_handler import SSHChainHandler
 
 __author__ = 'arnon'
-__version__ = '0.5.1'
+__version__ = '0.5.2'
 
