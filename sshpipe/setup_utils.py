@@ -15,8 +15,11 @@ def read(*parts, encoding="utf8"):
     # if not here:
     #     here = os.path.abspath(os.path.dirname(__file__))
 
-    with codecs.open(os.path.join(*parts), "rb", encoding) as f:
-        return f.read()
+    path = os.path.join(*parts)
+    with codecs.open(path, "rb", encoding) as f:
+        result = f.read()
+
+    return result
 
 
 def find_meta(meta, file, error=True):
@@ -170,6 +173,25 @@ def read_version(tag='version', metafile=None, metahost=None):
                            "or metahost: {}".format(tag, metafile,
                                                     metahost))
     return VERSION
+
+
+def read_required(tag='required', metafile=None, metahost=None):
+    try:
+        text = read_meta_or_file(tag, metafile=metafile, metahost=metahost)
+    except Exception:
+        text = ''
+
+    REQUIRED = []
+    if text:
+        for item in text.split('\n'):
+            item = item.strip()
+            if item:
+                REQUIRED += [item]
+    else:
+        raise RuntimeError("Cannot read {} from metafile: {},"
+                           "or metahost: {}".format(tag, metafile,
+                                                    metahost))
+    return REQUIRED
 
 
 def existing_package(package):
